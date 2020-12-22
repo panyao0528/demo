@@ -1,0 +1,28 @@
+{
+    "name": "socket-io-service",
+    "version": "0.0.1",
+    "socketConfig": {
+        "serverConfig": {
+            "option": {
+                "path": "/test",
+                "serveClient": false,
+                "pingInterval": 10000,
+                "pingTimeout": 5000,
+                "cookie": false
+            },
+            "nsp":"pangy",
+            "port": 9000
+        },
+        "clientConfig": {
+            "clientOpts": {
+                "path": "/test",
+                "forceNew": true,
+                "transports": [
+                    "websocket"
+                ]
+            },
+            "url": "http://localhost:9000",
+            "nsp":"pangy"
+        }
+    }
+}

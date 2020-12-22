@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const path = require('path')
+
+const { server, client } = require('../lib')
+
+
+let configPath = process.argv.length >= 3 ? process.argv[2] : 'config/config.json'
+
+configPath = path.isAbsolute(configPath) ? configPath : path.join(process.cwd(), configPath)
+
+const config = require(configPath)
+
+const socketClient = client.getClient(config.socketConfig.clientConfig)
+
+function start() {
+  const sockerServer = new server(config.socketConfig.serverConfig)
+  sockerServer.start()
+  console.log(`start socker ${new Date()}`)
+  // setInterval(() => {
+  //   socketClient.socket.emit('msg', `client-----${new Date().getTime()}---clent`)
+  // }, 3000)
+}
+
+start()
+
+function clientLisner() {
+  socketClient.socket.on('romm1',(data)=>{
+  console.log(`room1 data =>${data},id=>${socketClient.socket.id}`)
+  })
+}
+
+clientLisner()
+
+process.on('beforeExit', () => {
+  process.exit(0)
+})

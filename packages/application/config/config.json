@@ -1,0 +1,8 @@
+{
+    "name": "py-services",
+    "version": "0.0.1",
+    "socketConfig": {
+        "path": "",
+        "port": 9000
+    }
+}
