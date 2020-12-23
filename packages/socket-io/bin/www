@@ -3,6 +3,7 @@
 'use strict'
 
 const path = require('path')
+const { send } = require('process')
 
 const { server, client } = require('../lib')
 
@@ -27,12 +28,89 @@ function start() {
 start()
 
 function clientLisner() {
-  socketClient.socket.on('romm1',(data)=>{
-  console.log(`room1 data =>${data},id=>${socketClient.socket.id}`)
+  socketClient.socket.on('room1', (data) => {
+    console.log(`room1 data =>${data},id=>${socketClient.socket.id}`)
   })
+
+  socketClient.socket.emit('joinRoom', {
+    id:'1',
+    room: 'room',
+    content: '1进入房间'
+  })
+  socketClient.socket.on('roomEvent', function (data) {
+    console.log(`socket 1 id ${socketClient.socket.id} get msg by ${data.id}`)
+  })
+
+ 
+  function send() {
+    socketClient.socket.emit('sendMsg', {
+      id:1,
+      room: 'room',
+      content: '群发消息1'
+    })
+  }
+
+  // socketClient.socket.emit('msg','join room1')
+  // setInterval(()=>{
+  //   send()
+  // },4000)
 }
 
+
 clientLisner()
+getclient2() 
+
+function getclient2() {
+  const socketClient2 = client.getClient(config.socketConfig.clientConfig)
+  let socket = socketClient2.socket
+  socket.emit('joinRoom', {
+    id:2,
+    room: 'room',
+    content: '进入房间2'
+  })
+  socket.on('roomEvent', function (data) {
+    console.log(`socket 2 id ${socket.id} get msg by ${data.id}`)
+  })
+
+    socket.emit('sendMsg', {
+      id:2,
+      room: 'room',
+      content: '发消息2'
+    })
+
+  // setInterval(()=>{
+  //   socket.emit('sendMsg', {
+  //     id:2,
+  //     room: 'room',
+  //     content: '群发消息2'
+  //   })
+  // },2000)
+
+}
+
+  function getclient3() {
+    const socketClient3 = client.getClient(config.socketConfig.clientConfig)
+    let socket = socketClient3.socket
+    socket.emit('joinRoom', {
+      id:3,
+      room: 'room',
+      content: '进入房间3'
+    })
+    socket.on('roomEvent', function (data) {
+      console.log(`socket 3 id ${socket.id} get msg by ${data.id}`)
+    })
+  
+  // setInterval(()=>{
+  //   socket.emit('sendMsg', {
+  //     room: 'room',
+  //     content: '群发消息2'
+  //   })
+  // },2000)
+
+}
+
+getclient3()
+
 
 process.on('beforeExit', () => {
   process.exit(0)

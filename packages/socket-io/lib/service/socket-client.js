@@ -40,8 +40,9 @@ class SocketClient {
             console.log(`start ${c} reconnect`)
         })
 
-        this.socket.on('disconnect', () => {
+        this.socket.on('disconnect', (err) => {
             this.connected = false
+            this.destory()
             console.log(`client disconnect`)
         })
     }

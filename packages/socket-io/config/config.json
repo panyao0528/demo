@@ -4,7 +4,7 @@
     "socketConfig": {
         "serverConfig": {
             "option": {
-                "path": "/test",
+                "path": "",
                 "serveClient": false,
                 "pingInterval": 10000,
                 "pingTimeout": 5000,
@@ -15,7 +15,7 @@
         },
         "clientConfig": {
             "clientOpts": {
-                "path": "/test",
+                "path": "",
                 "forceNew": true,
                 "transports": [
                     "websocket"
